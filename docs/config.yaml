@@ -97,11 +97,6 @@ external-doh-server: /dns-query
 
 # interface-name: en0 # 设置出口网卡
 
-# 全局 TLS 指纹，优先低于 proxy 内的 client-fingerprint
-# 可选： "chrome","firefox","safari","ios","random","none" options.
-# Utls is currently support TLS transport in TCP/grpc/WS/HTTP for VLESS/Vmess and trojan.
-global-client-fingerprint: chrome
-
 #  TCP keep alive interval
 # disable-keep-alive: false #目前在android端强制为true
 # keep-alive-idle: 15
@@ -464,6 +459,7 @@ proxies: # socks5
       #   enable: true # 必须手动开启
       #   # 如果config为空则通过dns解析，不为空则通过该值指定，格式为经过base64编码的ech参数（dig +short TYPE65 tls-ech.dev）
       #   config: AEn+DQBFKwAgACABWIHUGj4u+PIggYXcR5JF0gYk3dCRioBW8uJq9H4mKAAIAAEAAQABAANAEnB1YmxpYy50bHMtZWNoLmRldgAA
+      #   # query-server-name: xxx.com # 可选项，不为空时用于指定通过dns解析时的域名
       # skip-cert-verify: true
       # host: bing.com
       # path: "/"
@@ -605,6 +601,7 @@ proxies: # socks5
     #   enable: true # 必须手动开启
     #   # 如果config为空则通过dns解析，不为空则通过该值指定，格式为经过base64编码的ech参数（dig +short TYPE65 tls-ech.dev）
     #   config: AEn+DQBFKwAgACABWIHUGj4u+PIggYXcR5JF0gYk3dCRioBW8uJq9H4mKAAIAAEAAQABAANAEnB1YmxpYy50bHMtZWNoLmRldgAA
+    #   # query-server-name: xxx.com # 可选项，不为空时用于指定通过dns解析时的域名
     # ws-opts:
       # path: /path
       # headers:
@@ -669,6 +666,7 @@ proxies: # socks5
     # skip-cert-verify: true
     grpc-opts:
       grpc-service-name: "example"
+      # grpc-user-agent: "grpc-go/1.36.0"
     # ip-version: ipv4
 
   # vless
@@ -689,6 +687,7 @@ proxies: # socks5
     #   enable: true # 必须手动开启
     #   # 如果config为空则通过dns解析，不为空则通过该值指定，格式为经过base64编码的ech参数（dig +short TYPE65 tls-ech.dev）
     #   config: AEn+DQBFKwAgACABWIHUGj4u+PIggYXcR5JF0gYk3dCRioBW8uJq9H4mKAAIAAEAAQABAANAEnB1YmxpYy50bHMtZWNoLmRldgAA
+    #   # query-server-name: xxx.com # 可选项，不为空时用于指定通过dns解析时的域名
 
   - name: "vless-vision"
     type: vless
@@ -757,6 +756,8 @@ proxies: # socks5
     servername: testingcf.jsdelivr.net
     grpc-opts:
       grpc-service-name: "grpc"
+      # grpc-user-agent: "grpc-go/1.36.0"
+      
     reality-opts:
       public-key: CrrQSjAG_YkHLwvM2M-7XkKJilgL5upBKCp0od0tLhE
       short-id: 10f897e26c4b9478
@@ -809,6 +810,7 @@ proxies: # socks5
     #   enable: true # 必须手动开启
     #   # 如果config为空则通过dns解析，不为空则通过该值指定，格式为经过base64编码的ech参数（dig +short TYPE65 tls-ech.dev）
     #   config: AEn+DQBFKwAgACABWIHUGj4u+PIggYXcR5JF0gYk3dCRioBW8uJq9H4mKAAIAAEAAQABAANAEnB1YmxpYy50bHMtZWNoLmRldgAA
+    #   # query-server-name: xxx.com # 可选项，不为空时用于指定通过dns解析时的域名
 
   - name: trojan-grpc
     server: server
@@ -825,6 +827,7 @@ proxies: # socks5
     udp: true
     grpc-opts:
       grpc-service-name: "example"
+      # grpc-user-agent: "grpc-go/1.36.0"
 
   - name: trojan-ws
     server: server
@@ -879,6 +882,7 @@ proxies: # socks5
     #   enable: true # 必须手动开启
     #   # 如果config为空则通过dns解析，不为空则通过该值指定，格式为经过base64编码的ech参数（dig +short TYPE65 tls-ech.dev）
     #   config: AEn+DQBFKwAgACABWIHUGj4u+PIggYXcR5JF0gYk3dCRioBW8uJq9H4mKAAIAAEAAQABAANAEnB1YmxpYy50bHMtZWNoLmRldgAA
+    #   # query-server-name: xxx.com # 可选项，不为空时用于指定通过dns解析时的域名
     # skip-cert-verify: false
     # recv-window-conn: 12582912
     # recv-window: 52428800
@@ -907,6 +911,7 @@ proxies: # socks5
     #   enable: true # 必须手动开启
     #   # 如果config为空则通过dns解析，不为空则通过该值指定，格式为经过base64编码的ech参数（dig +short TYPE65 tls-ech.dev）
     #   config: AEn+DQBFKwAgACABWIHUGj4u+PIggYXcR5JF0gYk3dCRioBW8uJq9H4mKAAIAAEAAQABAANAEnB1YmxpYy50bHMtZWNoLmRldgAA
+    #   # query-server-name: xxx.com # 可选项，不为空时用于指定通过dns解析时的域名
     # skip-cert-verify: false
     # fingerprint: xxxx # 配置指纹将实现 SSL Pining 效果, 可使用 openssl x509 -noout -fingerprint -sha256 -inform pem -in yourcert.pem 获取
     # 下面两项如果填写则开启 mTLS（需要同时填写）
@@ -934,6 +939,7 @@ proxies: # socks5
     reserved: "U4An"
     # 数组格式也是合法的
     # reserved: [209,98,59]
+    # persistent-keepalive: 0
     # 一个出站代理的标识。当值不为空时，将使用指定的 proxy 发出连接
     # dialer-proxy: "ss1"
     # remote-dns-resolve: true # 强制 dns 远程解析，默认值为 false
@@ -1002,6 +1008,7 @@ proxies: # socks5
     #   enable: true # 必须手动开启
     #   # 如果config为空则通过dns解析，不为空则通过该值指定，格式为经过base64编码的ech参数（dig +short TYPE65 tls-ech.dev）
     #   config: AEn+DQBFKwAgACABWIHUGj4u+PIggYXcR5JF0gYk3dCRioBW8uJq9H4mKAAIAAEAAQABAANAEnB1YmxpYy50bHMtZWNoLmRldgAA
+    #   # query-server-name: xxx.com # 可选项，不为空时用于指定通过dns解析时的域名
     #
     # meta 和 sing-box 私有扩展，将 ss-uot 用于 udp 中继，开启此选项后 udp-relay-mode 将失效
     # 警告，与原版 tuic 不兼容！！！
@@ -1068,6 +1075,7 @@ proxies: # socks5
     # http-mask-mode: legacy # 可选：legacy（默认）、stream、poll、auto；stream/poll/auto 支持走 CDN/反代
     # http-mask-tls: true # 可选：仅在 http-mask-mode 为 stream/poll/auto 时生效；true 强制 https；false 强制 http（不会根据端口自动推断）
     # http-mask-host: "" # 可选：覆盖 Host/SNI（支持 example.com 或 example.com:443）；仅在 http-mask-mode 为 stream/poll/auto 时生效
+    # path-root: "" # 可选：HTTP 隧道端点一级路径前缀（双方需一致），例如 "aabbcc" => /aabbcc/session、/aabbcc/stream、/aabbcc/api/v1/upload
     # http-mask-multiplex: off # 可选：off（默认）、auto（复用 h1.1 keep-alive / h2 连接，减少每次建链 RTT）、on（单条隧道内多路复用多个目标连接；仅在 http-mask-mode=stream/poll/auto 生效）
     enable-pure-downlink: false # 是否启用混淆下行，false的情况下能在保证数据安全的前提下极大提升下行速度，与服务端端保持相同(如果此处为false，则要求aead不可为none)
 
@@ -1371,7 +1379,7 @@ listeners:
     #   dC5jb20AAA==
     #   -----END ECH KEYS-----
 
-  - name: reidr-in-1
+  - name: redir-in-1
     type: redir
     port: 10811 # 支持使用ports格式，例如200,302 or 200,204,401-429,501-503
     listen: 0.0.0.0
@@ -1617,6 +1625,7 @@ listeners:
     enable-pure-downlink: false # 是否启用混淆下行，false的情况下能在保证数据安全的前提下极大提升下行速度，与客户端保持相同(如果此处为false，则要求aead不可为none)
     disable-http-mask: false # 可选：禁用 http 掩码/隧道（默认为 false）
     # http-mask-mode: legacy # 可选：legacy（默认）、stream、poll、auto；stream/poll/auto 支持走 CDN/反代
+    # path-root: "" # 可选：HTTP 隧道端点一级路径前缀（双方需一致），例如 "aabbcc" => /aabbcc/session、/aabbcc/stream、/aabbcc/api/v1/upload
 
 
 
